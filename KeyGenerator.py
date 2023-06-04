@@ -1,58 +1,93 @@
 import random 
 
 elements = "+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-keywordLenght = 0; password=""; keyword = ""
 
+def DefaultKeyGen():
+    password=""
+    passlength = int(input("De que tamaño quiere su contraseña?: "))
 
-print("Soy un programa que genera contraseñas") # Saludo normal 
+    for i in range(passlength):
+        password+=random.choice(elements)
+    print(password)
 
-while(True):
-    try:
-        pass_length = int(input("De cuantos caracteres quieres tu contraseña?: "))
-        break
-    except:
-        print("Caracter invalido - intente de nuevo")
-MenuLoop = True
-while(MenuLoop):
-    MenuSelec = input("Le gustaria agregar una palabra clave a la contraseña? S - Si / N - No: ").upper()
-    if(MenuSelec == "S"):
-        while(True):
-            keyword = input("Ingrese la palabra clave: ")
-            if(len(keyword) > pass_length):
-                print("La palabra clave es muy grande - intente de nuevo")
-            else:
-                break
-        
-        ClaveGeneratorLoop = True
-        while(ClaveGeneratorLoop):
-            keywordbool = False
-            PassSize = pass_length - len(keyword)
-            password=""
-            for i in range(PassSize):
-                password+=random.choice(elements)
-                if ((random.randint(0, PassSize) == random.randint(0, PassSize) and keywordbool == False)):
-                    password+=keyword
-                    keywordbool = True
-            
-            if keywordbool == True:
-                ClaveGeneratorLoop = False
-                MenuLoop = False
-                break
-            
-    elif(MenuSelec == "N"):
-        
-        for i in range(pass_length):
-            password+=random.choice(elements)
+def LeftKeyGen():
+    password=""
+    passlength = int(input("De que tamaño quiere su contraseña?: "))
+    keyword = input("Ingrese la palabra a agregar: ")
+    password_length = passlength - len(keyword)
+    
+    password+=keyword
+    for i in range(password_length):
+        password+=random.choice(elements)
+    print("Contraseña:",password)
 
-        break
-    else:
-        print("Caracter invalido - intente de nuevo")
+def MiddleKeyGen():
+    password=""
+    passlength = int(input("De que tamaño quiere su contraseña?: "))
+    keyword = input("Ingrese la palabra a agregar: ")
+    password_length = passlength - len(keyword)
+    
+    
+    for i in range(password_length):
+        password+=random.choice(elements)
+        if(i == int((password_length/2) - 1)):
+            password+=keyword
+    print("Contraseña:",password)
 
+def RightKeyGen():
+    password=""
+    passlength = int(input("De que tamaño quiere su contraseña?: "))
+    keyword = input("Ingrese la palabra a agregar: ")
+    password_length = passlength - len(keyword)
+    
+    for i in range(password_length):
+        password+=random.choice(elements)
+    password+=keyword
+    print("Contraseña:",password)
 
+def RandomKeyGen():
+    password=""
+    passlength = int(input("De que tamaño quiere su contraseña?: "))
+    keyword = input("Ingrese la palabra a agregar: ")
+    password_length = passlength - len(keyword)
+    RadKey = random.randint(0, password_length)
+    print(RadKey)
+    for i in range(password_length):
+        if(i == RadKey):
+            password += keyword
+        password+=random.choice(elements)
+ 
+    print("Contraseña:",password)
 
+def Menu():
+    while(True):
+        Menu = input("Le gustaria tener una palabra clave en su contraseña? S - Si / N - No : ").upper()
+        if(Menu == "S"):
+            print("Elija la posicion de la palabra clave \n 1 - Izquierda   2 - Derecha\n 3 - Medio       4 - Random")
+            while(True):
+                Menuselec = input()
+                match Menuselec:
+                    case "1":
+                        LeftKeyGen()
+                        break
+                    case "2":
+                        RightKeyGen()
+                        break
+                    case "3":
+                        MiddleKeyGen()
+                        break
+                    case "4":
+                        RandomKeyGen()
+                        break
+                    case _:
+                        print("Caracter invalido - intente de nuevo")
+                
+            break
+        elif (Menu == "N"):
+            DefaultKeyGen()
+            break
+        else:
+            print("Caracter invalido")
 
-print("Su contraseña generada es:", password)
-if(keyword != ""):
-    print("Su palabra clave fue:", keyword)
-
-
+print("-- ! Bienvenido ! Soy un programa que genera contraseñas --") # Saludo normal 
+Menu()

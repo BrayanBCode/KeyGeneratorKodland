@@ -46,11 +46,10 @@ def DefaultKeyGen(keyword, passlength, PassDeafult = ""):
 
     for i in range(password_length):
         PassDeafult+=random.choice(elements)
-    print(len(PassDeafult))
     return PassDeafult
 
 
-PassRandom = ""; PassDeafult = ""; PassDir = ""
+
 def Menu():
     while(True):
         Menu = input("Le gustaria tener una palabra clave en su contraseña? S - Si / N - No : ").upper()
